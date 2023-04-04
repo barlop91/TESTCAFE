@@ -1,63 +1,63 @@
 import { Selector } from 'testcafe';
 import fetch from 'node-fetch';
 
-// fixture`API Test`.page`http://localhost:3001/`;
+fixture`API Test`.page`http://localhost:3001/`;
 
-// test('Make GET request to retrieve the list of devices', async (t) => {
-//     const url = 'http://localhost:3000/devices';
+test('Make GET request to retrieve the list of devices', async (t) => {
+    const url = 'http://localhost:3000/devices';
 
-// fetch(url, {
-//   method: 'GET',
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-// })
-//   .then((response) => {
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! status: ${response.status}`);
-//     }
-//     return response.json();
-//   })
-//   .then((data) => {
-//     console.log(data);
-//   })
-//   .catch((error) => {
-//     console.error(`Fetch error: ${error}`);
-//   });
+fetch(url, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.error(`Fetch error: ${error}`);
+  });
     
-// });
+});
 
-// fixture('Device List')
-//   .page('http://localhost:3000/devices');
+fixture('Device List')
+  .page('http://localhost:3000/devices');
 
-//   test('Device elements are visible in the DOM and correctly displayed', async (t) => {
-//     const deviceList = Selector('#device-list');
-//     const deviceElements = deviceList.find('.device-element');
+  test('Device elements are visible in the DOM and correctly displayed', async (t) => {
+    const deviceList = Selector('#device-list');
+    const deviceElements = deviceList.find('.device-element');
   
-//     await t
-//       .expect(deviceList.exists).ok()
-//       .expect(deviceElements.count).eql(3);
+    await t
+      .expect(deviceList.exists).ok()
+      .expect(deviceElements.count).eql(3);
   
-//     await deviceElements.forEach(async (deviceElement) => {
-//       const name = await deviceElement.find('.device-name').innerText;
-//       const type = await deviceElement.find('.device-type').innerText;
-//       const capacity = await deviceElement.find('.device-capacity').innerText;
+    await deviceElements.forEach(async (deviceElement) => {
+      const name = await deviceElement.find('.device-name').innerText;
+      const type = await deviceElement.find('.device-type').innerText;
+      const capacity = await deviceElement.find('.device-capacity').innerText;
   
-//       await t
-//         .expect(name).eql('Device Name')
-//         .expect(type).eql('Device Type')
-//         .expect(capacity).eql('Device Capacity');
-//     });
-//   });
+      await t
+        .expect(name).eql('Device Name')
+        .expect(type).eql('Device Type')
+        .expect(capacity).eql('Device Capacity');
+    });
+  });
 
-// test('Edit and Delete buttons are visible for all devices', async (t) => {
-//   const deviceList = Selector('#device-list');
+test('Edit and Delete buttons are visible for all devices', async (t) => {
+  const deviceList = Selector('#device-list');
 
-//   await t
-//     .expect(deviceList.exists).ok()
-//     .expect(deviceList.find('.edit-device').count).eql(3)
-//     .expect(deviceList.find('.delete-device').count).eql(3);
-// });
+  await t
+    .expect(deviceList.exists).ok()
+    .expect(deviceList.find('.edit-device').count).eql(3)
+    .expect(deviceList.find('.delete-device').count).eql(3);
+});
 
 fixture('Create Device')
   .page('http://localhost:3001');
@@ -75,18 +75,18 @@ test('Create a device using the UI, and verify the new device is now visible', a
     .typeText('#hdd_capacity', deviceCapacity)
     .click('#root > div > div > div > a > button');
 
-//   const deviceList = Selector('#device-list');
-//   const deviceElements = deviceList.find('.device-element');
+  const deviceList = Selector('#device-list');
+  const deviceElements = deviceList.find('.device-element');
 
-//   const lastDeviceElement = deviceElements.nth(-1);
-//   const name = await lastDeviceElement.find('.device-name').innerText;
-//   const type = await lastDeviceElement.find('.device-type').innerText;
-//   const capacity = await lastDeviceElement.find('.device-capacity').innerText;
+  const lastDeviceElement = deviceElements.nth(-1);
+  const name = await lastDeviceElement.find('.device-name').innerText;
+  const type = await lastDeviceElement.find('.device-type').innerText;
+  const capacity = await lastDeviceElement.find('.device-capacity').innerText;
 
-//   await t
-//     .expect(name).eql(deviceName)
-//     .expect(type).eql(deviceType)
-//     .expect(capacity).eql(deviceCapacity);
+  await t
+    .expect(name).eql(deviceName)
+    .expect(type).eql(deviceType)
+    .expect(capacity).eql(deviceCapacity);
 });
 
 fixture `Rename Device`
