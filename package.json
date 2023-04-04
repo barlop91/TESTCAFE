@@ -1,0 +1,10 @@
+{
+
+  "scripts": {
+    "testDemo": "testcafe chrome tests/Session1/Assessment.js"
+  },
+
+  "dependencies": {
+    "testcafe": "^2.4.0"
+  }
+}
