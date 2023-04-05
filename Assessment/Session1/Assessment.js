@@ -3,6 +3,8 @@ import fetch from 'node-fetch';
 
 fixture`API Test`.page`http://localhost:3001/`;
 
+
+//DEPRECATED
 test('Make GET request to retrieve the list of devices', async (t) => {
     const url = 'http://localhost:3000/devices';
 
