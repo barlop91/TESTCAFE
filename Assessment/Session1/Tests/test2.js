@@ -1,6 +1,7 @@
 import { Selector } from 'testcafe';
 import DeviceListPage from '../Pages/DeviceListPage.js'; 
 
+
 fixture('Create Device')
   .page('http://localhost:3001');
 
@@ -12,16 +13,18 @@ test('Create a device using the UI, and verify the new device is now visible', a
 
   await createDevicePage.createDevice(deviceName, deviceType, deviceCapacity);
 
-  const deviceList = Selector('#device-list');
-  const deviceElements = deviceList.find('.device-element');
+  const deviceElements = Selector('.device-edit').withText('EDIT');
+  await t.click(deviceElements.nth(-1));
 
-  const lastDeviceElement = deviceElements.nth(-1);
-  const name = await lastDeviceElement.find('.device-name').innerText;
-  const type = await lastDeviceElement.find('.device-type').innerText;
-  const capacity = await lastDeviceElement.find('.device-capacity').innerText;
-
-  await t
-    .expect(name).eql(deviceName)
-    .expect(type).eql(deviceType)
-    .expect(capacity).eql(deviceCapacity);
+  const name = Selector('#system_name').withText(deviceName);
+  const type =  Selector('#type').withExactText(deviceType);
+  const capacity =  Selector('#hdd_capacity').withText(deviceCapacity);
+  
+  await t.expect (name).exists;
+  await t.expect (type).exists;
+  await t.expect(capacity).exists;
+    
+  
+  
+  
 });

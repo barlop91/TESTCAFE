@@ -1,11 +1,12 @@
 {
 
   "scripts": {
-    "testDemo": "testcafe chrome Assessment/Session1/Tests", 
+    "testDemo": "testcafe chrome Assessment/Session1/Tests/*.js", 
     "test1": "testcafe chrome Assessment/Session1/Tests/test1.js",
     "test2": "testcafe chrome Assessment/Session1/Tests/test2.js",
     "test3": "testcafe chrome Assessment/Session1/Tests/test3.js",
-    "test4": "testcafe chrome Assessment/Session1/Tests/test4.js"
+    "test4": "testcafe chrome Assessment/Session1/Tests/test4.js",
+    "test5": "testcafe chrome Assessment/Session1/Tests/test5.js"
   },
 
   "dependencies": {

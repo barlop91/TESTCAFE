@@ -21,20 +21,20 @@ export default class DeviceListPage {
   }
 
   static async isDeviceListVisible() {
-    const deviceList = Selector('#device-list');
+    const deviceList = Selector('.list-devices');
 
     return await deviceList.exists;
   }
 
   static async getDeviceElements() {
-    const deviceList = Selector('#device-list');
+    const deviceList = Selector('.device-name');
     const deviceElements = deviceList.find('.device-element');
 
     return deviceElements;
   }
 
   static async getDeviceDetails(deviceElement) {
-    const name = await deviceElement.find('.device-name').innerText;
+    const name = await deviceElement.find('.device-#root > div > div > div.list-devices-main > div > div:nth-child(1) > div.device-info > span.device-name').innerText;
     const type = await deviceElement.find('.device-type').innerText;
     const capacity = await deviceElement.find('.device-capacity').innerText;
 
@@ -46,17 +46,38 @@ export default class DeviceListPage {
   }
 
   static async countEditButtons() {
-    const deviceList = Selector('#device-list');
-    const editButtons = deviceList.find('.edit-device');
+    const buttons = Selector('.device-edit').withText('EDIT').with({ visibilityCheck: true });;;
+    const numButtons = await buttons.count;
+    console.log(`Number of EDIT buttons: ${numButtons}`);
 
-    return editButtons.count;
+    if (numButtons === 0) {
+      console.log("No EDIT buttons found. Retrying...");
+      await t.wait(1000); // Wait for 1 second before retrying
+      const numButtons = await buttons.count;
+      console.log(`Number of EDIT buttons after retry: ${numButtons}`);
+      return numButtons;
+    }
+    return numButtons;
   }
 
-  static async countDeleteButtons() {
-    const deviceList = Selector('#device-list');
-    const deleteButtons = deviceList.find('.delete-device');
 
-    return deleteButtons.count;
+  static async countDeleteButtons() {
+    const removebuttons = Selector('.device-remove').withText('REMOVE').with({ visibilityCheck: true });;
+
+    const numRemoveButtons = await removebuttons.count;
+    console.log(`Number of REMOVE buttons: ${numRemoveButtons}`);
+
+    if (numRemoveButtons === 0) {
+      console.log("No REMOVE buttons found. Retrying...");
+      await t.wait(1000); // Wait for 1 second before retrying
+      const numRemoveButtons = await removebuttons.count;
+      console.log(`Number of REMOVE buttons after retry: ${numRemoveButtons}`);
+      return numRemoveButtons;
+    }
+
+
+
+    return numRemoveButtons;
   }
 }
 
