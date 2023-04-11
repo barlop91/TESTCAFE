@@ -18,19 +18,50 @@ test
 fixture('Device List').page('http://localhost:3001/');
 
 test
-
+// .skip
 ('Device elements are visible in the DOM and correctly displayed', async (t) => {
-  const data = await API.getListOfDevices();
-  console.log(`devices names: ${data}`);
-  const data2 = await API.getListOftype();
-  console.log(`types:  ${data2}`);
-  const data3 = await API.getListOfCapacity();
-  console.log(`Capacities: ${data3}`);
-  const firstDeviceName = data[0];
-  const element = Selector('#root > div > div > div.list-devices-main > div').withText(firstDeviceName);
+  await t.eval(() => {
+    // Evaluar si la página ha terminado de cargar
+    return document.readyState === 'complete';
+  });
+  
+  // Obtener lista de devices de la API
+  const dataFromAPI = await API.getListOfDevices();
+  console.log(`API devices names ${dataFromAPI}`);
 
-  // Verificar que el texto está presente en la página
-  await t.expect(element.exists).ok();
+   // Obtener lista de devices de la UI
+  const dataFromUI = await DeviceListPage.getDevicesFromUI();
+  console.log(`UI devices names ${dataFromUI}`);
+
+
+  const typeFromAPI = await API.getListOftype();
+  console.log(`API devices types ${typeFromAPI}`);
+
+  const typesFromUI = await DeviceListPage.getTypesFromUI();
+  console.log(`UI devices names ${typesFromUI}`);
+
+  const capFromAPI = await API.getListOfCapacity();
+  console.log(`API devices capacity ${capFromAPI}`);
+
+  const capFromUI = await DeviceListPage.getCapFromUI();
+  console.log(`UI capacity ${capFromUI}`);
+  
+
+  // Comparar ambas listas para validar que existan los nombres, tipos y capacidades
+
+      const compareLists = (arr1, arr2) => {
+        for (let i = 0; i < arr1.length; i++) {
+          if (!arr2.includes(arr1[i])) {
+            return false;
+          }
+        }
+        return true;
+      };
+
+      await t.expect(compareLists(dataFromAPI, dataFromUI)).ok();
+      await t.expect(compareLists(typeFromAPI, typesFromUI)).ok();
+      await t.expect(compareLists(capFromUI, capFromAPI)).ok;
+      
   
 });
 

@@ -24,10 +24,10 @@ export default class API {
     const deviceNames = devices.map(device => device.system_name);
     const deviceNamesString = deviceNames.join(', '); // Converts the array to a string separated by commas
     const deviceNamesArray = deviceNamesString.split(', ');
-    console.log('Device names array:', deviceNamesArray);
+    console.log('Device names array:', deviceNames);
 
 
-   return deviceNamesArray;
+   return deviceNames;
 } catch (error) {
   console.error(`Failed to retrieve list of devices: ${error}`);
   return null;

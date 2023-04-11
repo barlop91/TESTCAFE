@@ -46,6 +46,7 @@ export default class DeviceListPage {
   }
 
   static async countEditButtons() {
+    await t.wait(2000);
     const buttons = Selector('.device-edit').withText('EDIT').with({ visibilityCheck: true });;;
     const numButtons = await buttons.count;
     console.log(`Number of EDIT buttons: ${numButtons}`);
@@ -62,6 +63,7 @@ export default class DeviceListPage {
 
 
   static async countDeleteButtons() {
+    await t.wait(2000);
     const removebuttons = Selector('.device-remove').withText('REMOVE').with({ visibilityCheck: true });;
 
     const numRemoveButtons = await removebuttons.count;
@@ -79,5 +81,60 @@ export default class DeviceListPage {
 
     return numRemoveButtons;
   }
+
+
+  static async getDevicesFromUI() {
+    await t.wait(3000);
+
+    const uiDevices = Selector('.device-name');
+  const deviceCount = await uiDevices.count;
+
+  console.log(`Found ${deviceCount} devices:`);
+
+  const listaDevices = [];
+  for (let i = 0; i < deviceCount; i++) {
+    const deviceName = await uiDevices.nth(i).textContent;
+    listaDevices.push(deviceName);
+  }
+  
+  return listaDevices;
+}
+
+static async getTypesFromUI() {
+  await t.wait(2000);
+
+  const uiDevices = Selector('.device-type');
+const deviceCount = await uiDevices.count;
+
+console.log(`Found ${deviceCount} types:`);
+
+const listaDevices = [];
+for (let i = 0; i < deviceCount; i++) {
+  const deviceName = await uiDevices.nth(i).textContent;
+  listaDevices.push(deviceName);
+}
+
+return listaDevices;
+}
+
+static async getCapFromUI() {
+  await t.wait(3000);
+
+  const uiDevices = Selector('.device-capacity');
+const deviceCount = await uiDevices.count;
+
+console.log(`Found ${deviceCount} caps:`);
+
+const listaDevices = [];
+for (let i = 0; i < deviceCount; i++) {
+  const deviceName = await uiDevices.nth(i).textContent;
+  listaDevices.push(deviceName);
+}
+const numericArray = listaDevices.map(str => parseInt(str.replace(/\D/g, '')));
+
+// console.log(numericArray);
+return numericArray;
+}
+
 }
 
